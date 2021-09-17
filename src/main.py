@@ -2,17 +2,19 @@ import os
 import glob
 import time
 
+# Oputput
 print("Inserte cada cuanto tiempo desea que corra el programa (segundos):")
-# Obtener segundos
+# Obtener segundos cada cuanto corre
 segundos = int(input())
 
-
+# Prefijo que se le pondra a cada carpeta antes de la extension
+PREFIJO_CARPETA = "files "
 
 
 def crearCarpetas():
     for extension in extension_set:
         try:
-            os.makedirs("Archivos_" + extension)
+            os.makedirs(PREFIJO_CARPETA + extension)
         except FileExistsError:
             continue
 
@@ -21,7 +23,7 @@ def ordenarArchivos():
     for file in files_list:
         fextension = file.rsplit(sep=".", maxsplit=1)
         try:
-            os.rename(file, "Archivos_" + fextension[1] + "/" + file)
+            os.rename(file, PREFIJO_CARPETA + fextension[1] + "/" + file)
         except(OSError, IndexError):
             continue
 
