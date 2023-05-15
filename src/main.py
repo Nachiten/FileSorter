@@ -2,40 +2,6 @@ import os
 import glob
 import time
 
-# Cada cuantos segundos el software corre
-segundos = ""
-# Prefijo que se le pondrá a cada carpeta antes de la extension
-prefijo_carpeta = "files "
-
-# Get segundos input
-while True:
-    print("Inserte cada cuanto tiempo desea que corra el programa (Enter para 5 segundos):")
-    segundos = input()
-    if segundos.isdigit():
-        segundos = int(segundos)
-        break
-    elif segundos == "":
-        segundos = 5
-        break
-    else:
-        print("Error, debe ser un número entero o un Enter")
-
-# Do the same but for prefijo_carpeta
-while True:
-    print("Inserte el prefijo para las carpetas (Enter para 'files '):")
-    prefijo_carpeta = input()
-    # Check if prefijo_carpeta is string, and no empty
-    if prefijo_carpeta == "":
-        prefijo_carpeta = "files "
-        break
-    # Check if variable is string
-    elif not isinstance(prefijo_carpeta, str):
-        print("Error, debe ser una cadena de caracteres valida o un Enter")
-    else:
-        break
-
-print("Ejecutando cada '" + str(segundos) + "' segundos, con prefijo '" + prefijo_carpeta + "'")
-
 
 def crearCarpetas():
     for extension in extension_set:
@@ -71,14 +37,51 @@ def mostrarSetExtensiones():
     print("")
 
 
-while 1:
-    # Variables Globales
-    files_list = glob.glob("*")
-    extension_set = set()
+try:
+    # Cada cuantos segundos el software corre
+    segundos = ""
+    # Prefijo que se le pondrá a cada carpeta antes de la extension
+    prefijo_carpeta = "files "
 
-    crearSetExtensiones()
-    mostrarSetExtensiones()
-    crearCarpetas()
-    ordenarArchivos()
+    # Get segundos input
+    while True:
+        print("Inserte cada cuanto tiempo desea que corra el programa (Enter para 5 segundos):")
+        segundos = input()
+        if segundos.isdigit():
+            segundos = int(segundos)
+            break
+        elif segundos == "":
+            segundos = 5
+            break
+        else:
+            print("Error, debe ser un número entero o un Enter")
 
-    time.sleep(segundos)
+    # Do the same but for prefijo_carpeta
+    while True:
+        print("Inserte el prefijo para las carpetas (Enter para 'files '):")
+        prefijo_carpeta = input()
+        # Check if prefijo_carpeta is string, and no empty
+        if prefijo_carpeta == "":
+            prefijo_carpeta = "files "
+            break
+        # Check if variable is string
+        elif not isinstance(prefijo_carpeta, str):
+            print("Error, debe ser una cadena de caracteres valida o un Enter")
+        else:
+            break
+
+    print("Ejecutando cada '" + str(segundos) + "' segundos, con prefijo '" + prefijo_carpeta + "'")
+
+    while 1:
+        # Variables Globales
+        files_list = glob.glob("*")
+        extension_set = set()
+
+        crearSetExtensiones()
+        mostrarSetExtensiones()
+        crearCarpetas()
+        ordenarArchivos()
+
+        time.sleep(segundos)
+except KeyboardInterrupt:
+    print("Deteniendo programa...")
