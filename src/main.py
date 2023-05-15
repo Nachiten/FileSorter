@@ -2,28 +2,54 @@ import os
 import glob
 import time
 
-# Oputput
-print("Inserte cada cuanto tiempo desea que corra el programa (segundos):")
-# Obtener segundos cada cuanto corre
-segundos = int(input())
+# Cada cuantos segundos el software corre
+segundos = ""
+# Prefijo que se le pondrá a cada carpeta antes de la extension
+prefijo_carpeta = "files "
 
-# Prefijo que se le pondra a cada carpeta antes de la extension
-PREFIJO_CARPETA = "files "
+# Get segundos input
+while True:
+    print("Inserte cada cuanto tiempo desea que corra el programa (Enter para 5 segundos):")
+    segundos = input()
+    if segundos.isdigit():
+        segundos = int(segundos)
+        break
+    elif segundos == "":
+        segundos = 5
+        break
+    else:
+        print("Error, debe ser un número entero o un Enter")
+
+# Do the same but for prefijo_carpeta
+while True:
+    print("Inserte el prefijo para las carpetas (Enter para 'files '):")
+    prefijo_carpeta = input()
+    # Check if prefijo_carpeta is string, and no empty
+    if prefijo_carpeta == "":
+        prefijo_carpeta = "files "
+        break
+    # Check if variable is string
+    elif not isinstance(prefijo_carpeta, str):
+        print("Error, debe ser una cadena de caracteres valida o un Enter")
+    else:
+        break
+
+print("Ejecutando cada '" + str(segundos) + "' segundos, con prefijo '" + prefijo_carpeta + "'")
 
 
 def crearCarpetas():
     for extension in extension_set:
         try:
-            os.makedirs(PREFIJO_CARPETA + extension)
+            os.makedirs(prefijo_carpeta + extension)
         except FileExistsError:
             continue
 
 
 def ordenarArchivos():
     for file in files_list:
-        fextension = file.rsplit(sep=".", maxsplit=1)
+        fileExtension = file.rsplit(sep=".", maxsplit=1)
         try:
-            os.rename(file, PREFIJO_CARPETA + fextension[1] + "/" + file)
+            os.rename(file, prefijo_carpeta + fileExtension[1] + "/" + file)
         except(OSError, IndexError):
             continue
 
@@ -51,9 +77,7 @@ while 1:
     extension_set = set()
 
     crearSetExtensiones()
-
     mostrarSetExtensiones()
-
     crearCarpetas()
     ordenarArchivos()
 
